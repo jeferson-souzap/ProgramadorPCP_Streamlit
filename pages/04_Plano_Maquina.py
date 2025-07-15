@@ -11,9 +11,7 @@ st.set_page_config(layout="wide")
 
 st.header('Plano de Máquina')
 
-
 #configurar uma forma de salvar os dados em banco de dados 
-
 
 
 # Botão "Salvar Tudo"
