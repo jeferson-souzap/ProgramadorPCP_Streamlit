@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import sqlite3
 
+from fontTools.misc.cython import returns
 from numpy.matlib import empty
 from sympy.codegen.ast import none
 
@@ -15,6 +16,7 @@ from db.config_db import LOCAL_BANCO
 
 #CONFIGURAÇÃO DA PAGINA
 st.set_page_config(layout='wide', page_title='Cadastro Material', initial_sidebar_state="collapsed")
+#st.set_page_config(page_title='Cadastro Material', initial_sidebar_state="collapsed")
 st.header('Cadastro de produtos')
 
 
@@ -36,7 +38,6 @@ with st.expander('Importar relatório', expanded=False):
     arquivo_cadastro = st.file_uploader("--", type=["xlsx", "xls"])
     df_cadastro = tratamento_cadastro(arquivo_cadastro)
     importar_cadastro(df_cadastro, 'cadastro_material')
-
 
 with st.expander('Edição cadastro', expanded=True):
     cad_col01, cad_col02, cad_col03 = st.columns(3)
@@ -61,8 +62,24 @@ with st.expander('Edição cadastro', expanded=True):
 
 
 with st.expander("Cadastro de Material", expanded=True):
-    st.dataframe(carregar_dados())
-    
+    bt_col01, bt_col02 = st.columns(2)
 
+    with bt_col01:
+        if st.button('Salvar Alterações'):
+            pass
+
+    with bt_col02:
+        if st.button('Salvar Deletar'):
+            pass
+
+
+    linha_selecionada = st.dataframe(carregar_dados(),
+                 on_select='rerun',
+                 selection_mode='single-row',
+                 hide_index=True,
+                 key='data_frame'
+                 )
+    st.text(linha_selecionada)
+    #Vai funcionar desse jeito só falta implementar a lógica de carregamento, edição e o botão de excluir
 
 
